@@ -25,6 +25,14 @@ router.get('/:id', (req, res) => {
   return res.status(HTTP_OK_STATUS).json(findTalker);
 });
 
+router.delete('/:id', validToken, (req, res) => {
+  const { id } = req.params;
+  const talkers = readFile(FILE_TALKER);
+  const filterTalk = talkers.filter((talk) => talk.id !== Number(id));
+  writeFile(FILE_TALKER, filterTalk);
+  return res.status(204).json();
+});
+
 router.use(validToken, validName, validAge, validTalk);
 
 router.post('/', (req, res) => {
