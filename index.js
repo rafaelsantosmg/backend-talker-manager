@@ -12,6 +12,7 @@ const PORT = '3000';
 
 app.use('/login', routerLogin);
 app.use('/talker', routerTalker);
+// app.use('/talker/search?q=searchTerm', routerTalker);
 
 // não remova esse endpoint, e para o avaliador funcionar
 app.get('/', (_request, response) => {

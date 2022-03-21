@@ -11,6 +11,15 @@ const router = express.Router();
 const HTTP_OK_STATUS = 200;
 const FILE_TALKER = './talker.json';
 
+router.get('/search', validToken, (req, res) => {
+  const { searchTerm } = req.query;
+  const talkers = readFile(FILE_TALKER);
+  const findTalk = talkers.filter((talk) => talk.name.includes(searchTerm));
+  if (!searchTerm) return res.status(HTTP_OK_STATUS).json(talkers);
+  if (findTalk.length === 0) return res.status(HTTP_OK_STATUS).json([]);
+  return res.status(HTTP_OK_STATUS).json(findTalk);
+});
+
 router.get('/', (_req, res) => {
   const talkers = readFile(FILE_TALKER);
   if (talkers.length !== 0) return res.status(HTTP_OK_STATUS).json(talkers);
